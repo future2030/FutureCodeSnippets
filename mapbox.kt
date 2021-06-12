@@ -6,7 +6,7 @@ val zoom = getZoomLevelForSmallMapNew(item.startRadiusMeters?.toDouble()
                         ?: 0.0)
 
                 var styleId = StaticMapCriteria.SATELLITE_STREETS_STYLE
-                if (LohiApplication.getMapBoxMapType() == Style.MAPBOX_STREETS) {
+                if (MyApp.getMapBoxMapType() == Style.MAPBOX_STREETS) {
                     styleId = StaticMapCriteria.STREET_STYLE
                 }
                 val staticImage = MapboxStaticMap.builder()
