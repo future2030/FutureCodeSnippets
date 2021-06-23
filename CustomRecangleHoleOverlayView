@@ -1,0 +1,63 @@
+package com.example.view
+
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
+import android.util.AttributeSet
+import android.view.View
+
+/**
+This view is a work in progress and the overlay view position is not correct in the current version. Even though you can use this for custom drawing reference.
+*/
+class OverlayRectangleBoxView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    private val defStyleAttr: Int = 0
+) : View(context, attrs) {
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val transparentPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var mPath = Path()
+    private var mWidth = 0.0f
+    private var mHeight = 0.0f
+    private var innerBoxLeft = 0.0f
+    private var innerBoxTop = 0.0f
+    private var innerBoxWidth = 0.0f
+    private var innerBoxHeight = 0.0f
+    private var showInnerBox = false
+
+    override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
+        mWidth = width.toFloat()
+        mHeight = height.toFloat()
+    }
+
+   /* fun setInnerBoxPosition(left: Float, top: Float, width: Float, height: Float) {
+        innerBoxLeft = left
+        innerBoxTop = top
+        innerBoxWidth = width
+        innerBoxHeight = height
+        showInnerBox = true
+        invalidate()
+
+    }*/
+
+
+    override fun onDraw(canvas: Canvas) { // Override the onDraw() Method
+        super.onDraw(canvas)
+        innerBoxLeft = left + (width * 0.1f)
+        innerBoxTop = top + (height * 0.37f)
+        innerBoxWidth = width * 0.8f
+        innerBoxHeight = height * 0.26f
+        mPath.reset()
+
+        mPath.fillType = Path.FillType.EVEN_ODD
+        mPath.addRect(0.0f, 0.0f, mWidth, mHeight, Path.Direction.CW)
+        mPath.addRect(innerBoxLeft, innerBoxTop, innerBoxWidth, innerBoxHeight, Path.Direction.CCW)
+        paint.style = Paint.Style.FILL
+        paint.color = Color.GREEN
+        //transparentPaint.style = Paint.Style.FILL
+      //  transparentPaint.color = Color.BLUE
+        canvas.drawPath(mPath, paint);
+    }
+}
